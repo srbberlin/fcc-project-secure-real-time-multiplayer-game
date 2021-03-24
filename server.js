@@ -1,6 +1,8 @@
 require('dotenv').config();
 const express = require('express');
-const bodyParser = require('body-parser');
+const helmet = require('helmet')
+const nocache = require('nocache')
+//const bodyParser = require('body-parser');
 const expect = require('chai');
 const socket = require('socket.io');
 
@@ -12,8 +14,10 @@ const app = express();
 app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/assets', express.static(process.cwd() + '/assets'));
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(helmet())
+app.use(nocache())
 
 // Index page (static HTML)
 app.route('/')
@@ -48,5 +52,17 @@ const server = app.listen(portNum, () => {
     }, 1500);
   }
 });
+
+io = socket(server)
+
+io.sockets.on("connection", (s) => {
+  console.log("\n================== server connected ==================\n New ID:", s.id)
+
+  s.on("disconnect", (reason) => {
+    console.log("Disconnect:", reason)
+    const tid = setImmediate(() => {
+    })
+  })
+})
 
 module.exports = app; // For testing
