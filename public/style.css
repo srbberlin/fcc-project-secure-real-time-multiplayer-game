@@ -2,17 +2,24 @@ body {
   margin: 20px;
 }
 
+h1 {
+  text-align: center;
+  background-color: red;
+}
+
 code {
   background: #d0d0d5;
 }
 
 canvas {
   margin: auto;
+  background-color: yellow;
 }
 
 .container {
   display: flex;
   flex-direction: column;
+  background-color: lightyellow;
 }
 
 @media (min-width: 800px) {

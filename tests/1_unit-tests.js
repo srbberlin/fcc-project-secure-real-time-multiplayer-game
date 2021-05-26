@@ -7,8 +7,8 @@
 *
 */
 
-import Player from '../public/Player.mjs';
-import Collectible from '../public/Collectible.mjs';
+const { Player } = require('../Player');
+const { Collectible } = require('../Collectible');
 const chai = require('chai');
 const assert = chai.assert;
 const { JSDOM } = require('jsdom');
@@ -78,7 +78,7 @@ suite('Unit Tests', () => {
     });
 
     test("collision(obj) returns true when a player's avatar collides with a collectible item object.", done => {
-      const testPlayer = new Player({ x: 100, y: 100, id: Date.now() });
+      const testPlayer = new Player({ x: 100, y: 100, score:0, id: Date.now() + 10000});
       const testItem = new Collectible({ x: 100, y: 100, value: 1, id: Date.now() });
 
       assert.isTrue(testPlayer.collision(testItem));
@@ -98,5 +98,4 @@ suite('Unit Tests', () => {
       done();
     });
   });
-
 });
