@@ -2,57 +2,61 @@ import fs from 'fs'
 import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 //import inject from '@rollup/plugin-inject'
-import json from '@rollup/plugin-json'
+//import json from '@rollup/plugin-json'
 //import serve from 'rollup-plugin-serve'
 //import { babel } from '@rollup/plugin-babel'
 
 function copyAndWatch(fileIn, fileOut) {
-    return {
-        name: 'copy-and-watch',
-        async buildStart() {
-            this.addWatchFile(fileIn);
-        },
-        async generateBundle() {
-            this.emitFile({
-                type: 'asset',
-                fileName: fileOut,
-                source: fs.readFileSync(fileIn)
-            });
-        }
+  return {
+    name: 'copy-and-watch',
+    async buildStart() {
+      this.addWatchFile(fileIn)
+    },
+    async generateBundle() {
+      this.emitFile({
+        type: 'asset',
+        fileName: fileOut,
+        source: fs.readFileSync(fileIn)
+      })
     }
+  }
 }
 
 const config = [
-	{
-		input: './src/browser/game.js',
-		output: {
-			name: 'game',
-			dir: "./public",
-			format: 'iife'
-		},
-		plugins: [
-			resolve(), // so Rollup can find `ms`
-			commonjs(), // so Rollup can convert `ms` to an ES module
-			copyAndWatch('./views/index.html', 'index.html'),
-			copyAndWatch('./src/browser/style.css', 'style.css'),
-		]
-	},
-	{
-		input: './src/server/server.js',
-		output: {
-			name: 'server',
-			dir: "./"
-		},
-		plugins: [
-			copyAndWatch('./src/server/server.js', 'server.js'),
-			copyAndWatch('./src/Collectible.js', 'Collectible.js'),
-			copyAndWatch('./src/Player.js', 'Player.js'),
-			copyAndWatch('./src/Item.js', 'Item.js'),
-			copyAndWatch('./src/List.js', 'List.js'),
-			copyAndWatch('./src/dim.js', 'dim.js'),
-		]
-	}
-	/*,
+  {
+    input: './src/browser/game.js',
+    output: {
+      name: 'game',
+      dir: './public',
+      format: 'iife'
+    },
+    plugins: [
+      resolve(), // so Rollup can find `ms`
+      commonjs(), // so Rollup can convert `ms` to an ES module
+      copyAndWatch('./views/index.html', 'index.html'),
+      copyAndWatch('./src/browser/style.css', 'style.css'),
+    ]
+  },
+  {
+    input: './src/server/server.js',
+    output: {
+      name: 'server',
+      dir: './'
+    },
+    plugins: [
+      copyAndWatch('./src/Collectible.js', 'Collectible.js'),
+      copyAndWatch('./src/Player.js', 'Player.js'),
+      copyAndWatch('./src/Item.js', 'Item.js'),
+      copyAndWatch('./src/List.js', 'List.js'),
+      copyAndWatch('./src/dim.js', 'dim.js'),
+    ]
+  }
+]
+
+export default config
+
+
+/*,
 	{
 		input: './src/server/server.js',
 		external: [
@@ -98,9 +102,7 @@ const config = [
 			json()
 		]
 	}*/
-];
-
-			/*
+/*
 			serve({
 				open: true,
 				host: 'localhost',
@@ -116,6 +118,3 @@ const config = [
 				}
 			}),
 			json(),*/
-
-
-export default config;
