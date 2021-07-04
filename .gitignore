@@ -3,10 +3,10 @@
 .glitch-assets
 node_modules/
 dist/
-Collectible.js
-dim.js
-Item.js
-List.js
-list.json
-Player.js
-server.js
+/Collectible.js
+/dim.js
+/Item.js
+/List.js
+/list.json
+/Player.js
+/server.js
