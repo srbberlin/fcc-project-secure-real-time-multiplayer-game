@@ -5,6 +5,7 @@ const assets = process.cwd() + '/assets'
 
 const express = require('express')
 const helmet = require('helmet')
+const cors = require('cors')
 const nocache = require('nocache')
 const socket = require('socket.io')
 
@@ -27,6 +28,7 @@ app.use(express.static(assets))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(helmet())
+app.use(cors({origin: '*'}))
 app.use(nocache())
 app.use(function (req, res, next) {
   res.setHeader('X-Powered-By', 'PHP 7.4.3')
